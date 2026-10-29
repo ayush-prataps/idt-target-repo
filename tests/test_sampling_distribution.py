@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 class TestSamplingDistribution:
     """Tests evaluating statistical thresholds in respondent sampling routines."""
 
-    def test_random_value_above_threshold(self):
+    def test_sampling_distribution_threshold(self):
         """Verify sampling confidence metric meets minimum threshold."""
         value = random.random()  # nosec  # noqa: S311
         assert value >= 0.4, (

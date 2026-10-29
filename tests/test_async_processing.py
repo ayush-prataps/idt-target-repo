@@ -26,8 +26,11 @@ class TestAsyncProcessing:
         t = threading.Thread(target=background_job)
         t.start()
 
-        time.sleep(0.0205)
+        time.sleep(0.02)
 
-        assert result_holder.get("done") is True, (
-            "Async job was not completed within expected window."
-        )
+        try:
+            assert result_holder.get("done") is True, (
+                "Async job was not completed within expected window."
+            )
+        finally:
+            t.join(timeout=0.1)
