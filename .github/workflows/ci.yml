@@ -8,12 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Calibration mode (calibrate or triage-sim)'
+        description: 'Calibration mode (calibrate, triage-sim, or sweep)'
         required: false
         type: choice
         options:
           - calibrate
           - triage-sim
+          - sweep
 
 env:
   PYTHONUNBUFFERED: "1"

@@ -18,9 +18,11 @@ class TestAsyncProcessing:
     def test_async_job_completion(self):
         """Verify background task completes within expected time window."""
         result_holder = {}
+        worker_offset_ms = float(os.getenv("WORKER_OFFSET_MS", "3.0"))
+        worker_delay = 0.020 + (worker_offset_ms / 1000.0)
 
         def background_job():
-            time.sleep(0.023)
+            time.sleep(worker_delay)
             result_holder["done"] = True
 
         t = threading.Thread(target=background_job)
