@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Calibration mode (calibrate or triage-sim)'
+        required: false
+        type: choice
+        options:
+          - calibrate
+          - triage-sim
 
 env:
   PYTHONUNBUFFERED: "1"
@@ -67,4 +75,4 @@ jobs:
 
       - name: Run calibration protocol
         run: |
-          python scripts/calibrate.py
+          python scripts/calibrate.py --mode=${{ github.event.inputs.mode || 'calibrate' }}

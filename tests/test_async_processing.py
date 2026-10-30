@@ -20,13 +20,13 @@ class TestAsyncProcessing:
         result_holder = {}
 
         def background_job():
-            time.sleep(0.02)
+            time.sleep(0.023)
             result_holder["done"] = True
 
         t = threading.Thread(target=background_job)
         t.start()
 
-        time.sleep(0.02)
+        time.sleep(0.020)
 
         try:
             assert result_holder.get("done") is True, (
