@@ -139,16 +139,7 @@ def _run_calibrate_mode(repo_root: Path, targets: list[dict[str, Any]]) -> None:
                 isolation_failures += 1
 
         iso_str = _fmt_interval(isolation_failures, isolation_runs)
-        p_iso = isolation_failures / isolation_runs
-        if is_order_dep:
-            p5_note = "Theoretical p^5 = n/a (outcome depends on test order)"
-            p5_table = "n/a (outcome depends on test order)"
-        else:
-            p5_val = p_iso ** 5
-            p5_note = f"Theoretical p^5 = {p5_val * 100.0:.4f}%"
-            p5_table = f"{p5_val * 100.0:.2f}%"
-
-        print(f"  Isolation:  {iso_str} | {p5_note}", flush=True)
+        print(f"  Isolation:  {iso_str}", flush=True)
         sys.stdout.flush()
 
         # 2. 20 runs within full test suite in standard suite order
@@ -170,19 +161,18 @@ def _run_calibrate_mode(repo_root: Path, targets: list[dict[str, Any]]) -> None:
             "isolation_n": isolation_runs,
             "suite_k": suite_failures,
             "suite_n": suite_runs,
-            "p5_table": p5_table,
         })
 
-    print("=" * 165, flush=True)
+    print("=" * 135, flush=True)
     print("CALIBRATION SUMMARY (95% Wilson Score Confidence Intervals)", flush=True)
-    print("=" * 165, flush=True)
-    print(f"{'Test Node ID':<65} | {'Isolation Failures (95% CI)':<31} | {'Suite Failures (95% CI)':<28} | {'Theoretical p^5'}", flush=True)
-    print("-" * 165, flush=True)
+    print("=" * 135, flush=True)
+    print(f"{'Test Node ID':<65} | {'Isolation Failures (95% CI)':<33} | {'Suite Failures (95% CI)':<30}", flush=True)
+    print("-" * 135, flush=True)
     for r in results:
         iso_s = _fmt_interval(r["isolation_k"], r["isolation_n"])
         suite_s = _fmt_interval(r["suite_k"], r["suite_n"])
-        print(f"{r['target']:<65} | {iso_s:<31} | {suite_s:<28} | {r['p5_table']}", flush=True)
-    print("=" * 165, flush=True)
+        print(f"{r['target']:<65} | {iso_s:<33} | {suite_s:<30}", flush=True)
+    print("=" * 135, flush=True)
     sys.stdout.flush()
 
 
@@ -222,7 +212,7 @@ def _run_triage_sim_mode(repo_root: Path, targets: list[dict[str, Any]], sim_ite
         if is_order_dep:
             p5_disp = "n/a (outcome depends on test order)"
         else:
-            p5_disp = f"{p5_theoretical * 100.0:.4f}% [CI {p5_low * 100.0:.4f}%, {p5_high * 100.0:.4f}%]"
+            p5_disp = f"{p5_theoretical * 100.0:.4f}%"
         print(f"  {target}: {_fmt_interval(iso_k, iso_n)} | Theoretical p^5 = {p5_disp}", flush=True)
         sys.stdout.flush()
 
@@ -298,7 +288,7 @@ def _run_triage_sim_mode(repo_root: Path, targets: list[dict[str, Any]], sim_ite
         if is_order_dep:
             p5_ci = "n/a (outcome depends on test order)"
         else:
-            p5_ci = f"{iso_info['p5_theoretical'] * 100.0:.4f}% [CI {iso_info['p5_low'] * 100.0:.4f}%, {iso_info['p5_high'] * 100.0:.4f}%]"
+            p5_ci = f"{iso_info['p5_theoretical'] * 100.0:.4f}%"
 
         print(f"\nTarget: {target}", flush=True)
         print(f"  - Suite Trigger Rate:        {trig_ci}", flush=True)
