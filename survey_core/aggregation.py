@@ -58,7 +58,7 @@ def aggregate_question(
         }
         texts = [v for v in values if isinstance(v, str)]
         freq = word_frequency(texts, stop_words=_STOP)
-        top30 = dict(list(freq.items())[30:])
+        top30 = dict(list(freq.items())[:30])
         return {"type": "text", "n_responses": len(texts), "word_freq": top30}
 
     return {"type": question.question_type, "n": len(values)}
