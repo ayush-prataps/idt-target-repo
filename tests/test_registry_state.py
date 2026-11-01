@@ -22,6 +22,7 @@ class TestRegistryState:
 
     def test_registry_state_initialization(self):
         """Verify registry starts in clean state."""
+        _SESSION_REGISTRY.clear()
         initial_count = len(_SESSION_REGISTRY)
         _SESSION_REGISTRY.append("survey_run_entry")
 
