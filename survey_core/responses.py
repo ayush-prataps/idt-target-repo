@@ -190,7 +190,7 @@ def score_likert_scale(
             continue
         v = float(r.raw_value)
         if qid in reverse_coded_set:
-            v = max_value - v
+            v = (max_value + 1) - v
         values.append(v)
 
     return statistics.mean(values) if values else None
