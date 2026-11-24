@@ -215,7 +215,7 @@ def compute_nps(responses: list[Response], nps_question_id: str) -> dict[str, An
 
     n = len(values)
     promoters = sum(1 for v in values if v >= 9)
-    passives   = sum(1 for v in values if 7 < v <= 8)
+    passives   = sum(1 for v in values if 7 <= v <= 8)
     detractors = sum(1 for v in values if v <= 6)
 
     nps = round(((promoters - detractors) / n) * 100, 1)
